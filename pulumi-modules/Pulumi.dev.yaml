@@ -1,0 +1,4 @@
+config:
+  azure-native:location: brazilsouth
+  pulumi-az-webapp-poc:resourceNamePrefix: pulumi-az-webapp-demo
+  pulumi-az-webapp-poc:resourceNameSuffix: dev
