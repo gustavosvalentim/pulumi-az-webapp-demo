@@ -51,3 +51,4 @@ const appService = new web.WebApp(..., {
 ## References
 
 [Azure - deploy zip](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli)
+[Pulumi example appservice](https://www.pulumi.com/registry/packages/azure-native/how-to-guides/azure-ts-appservice/)
