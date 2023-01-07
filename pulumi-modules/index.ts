@@ -19,16 +19,16 @@ const appServicePlan = new web.AppServicePlan(getResourceName("appplan"), {
     resourceGroupName: resourceGroup.name,
     kind: "Linux",
     sku: {
-        name: "F1",
-        tier: "Basic",
+        name: config.require("skuName"),
+        tier: config.require("skuTier"),
     },
 }, { parent: resourceGroup, dependsOn: [resourceGroup] });
 
 const appInsights = new insights.Component(getResourceName("insights"), {
     resourceGroupName: resourceGroup.name,
-    kind: "web",
+    kind: "linux",
     applicationType: insights.ApplicationType.Web
-});
+}, { dependsOn: [resourceGroup], parent: resourceGroup });
 
 // Create App Service
 const appServiceName = getResourceName("api");
@@ -38,8 +38,15 @@ const appService = new web.WebApp(appServiceName, {
     httpsOnly: true,
     name: appServiceName,
     siteConfig: {
-        healthCheckPath: "/counter",
+        healthCheckPath: "/health",
         nodeVersion: "16-lts",
+        loadBalancing: web.SiteLoadBalancing.WeightedRoundRobin,
+        limits: {
+            maxPercentageCpu: 20
+        },
+        alwaysOn: true,
+        httpLoggingEnabled: true,
+        detailedErrorLoggingEnabled: true,
         appSettings: [
             {
                 name: "API_ENVIRONMENT",
@@ -57,7 +64,11 @@ const appService = new web.WebApp(appServiceName, {
                 name: "ApplicationInsightsAgent_EXTENSION_VERSION",
                 value: "~2",
             },
-        ]
+            {
+                name: "SCM_DO_BUILD_DURING_DEPLOYMENT",
+                value: "true",
+            },
+        ],
     },
 }, { parent: appServicePlan, dependsOn: [appServicePlan] });
 
