@@ -48,6 +48,22 @@ const appService = new web.WebApp(..., {
 });
 ```
 
+## Linux environment
+
+To use linux as OS instead of windows, which is default.
+
+```typescript
+const appServicePlan = new web.AppServicePlan(..., {
+    ...
+    kind: 'linux',
+    reserved: true,
+});
+```
+
+[Pulumi Docs - App Service Plan](https://www.pulumi.com/registry/packages/azure-native/api-docs/web/appserviceplan/#reserved_nodejs)
+
+[Pulumi Examples - Azure CS Functions](https://github.com/pulumi/examples/blob/master/azure-cs-functions/FunctionsStack.cs#L27)
+
 ## References
 
 [Azure - deploy zip](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli)

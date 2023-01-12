@@ -17,11 +17,12 @@ const resourceGroup = new resources.ResourceGroup(getResourceName("rg"));
 // Create App Service Plan
 const appServicePlan = new web.AppServicePlan(getResourceName("appplan"), {
     resourceGroupName: resourceGroup.name,
-    kind: "Linux",
+    kind: "linux",
     sku: {
         name: config.require("skuName"),
         tier: config.require("skuTier"),
     },
+    reserved: true,
 }, { parent: resourceGroup, dependsOn: [resourceGroup] });
 
 const appInsights = new insights.Component(getResourceName("insights"), {
