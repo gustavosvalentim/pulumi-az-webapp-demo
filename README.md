@@ -34,7 +34,7 @@ At the advanced tools page navigate to `Tools` > `Zip Push Deploy`.
 
 Just drag the file and drop at the web page.
 
-> After a few tests I noticed zip deploy only works when the following value is added to `SiteConfigArgs.appSettings`
+> After a few tests I noticed zip deploy only works if I add `SCM_DO_BUILD_DURING_DEPLOYMENT` to the web app settings. This kinds of settings can be found [here](https://learn.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet#build-automation)
 
 ```javascript
 const appService = new web.WebApp(..., {
