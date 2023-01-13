@@ -66,3 +66,9 @@ const appServicePlan = new web.AppServicePlan(..., {
 [Pulumi Docs - App Service Plan](https://www.pulumi.com/registry/packages/azure-native/api-docs/web/appserviceplan/#reserved_nodejs)
 
 [Pulumi Examples - Azure CS Functions](https://github.com/pulumi/examples/blob/master/azure-cs-functions/FunctionsStack.cs#L27)
+
+## Resources location
+
+By default, resources will be created in `brazilsouth` location, run `pulumi config set azure-native:location <region>` to change it.
+
+Obtain a list of available locations `az account list-locations --query "[].name"`.
