@@ -48,6 +48,9 @@ const appService = new web.WebApp(..., {
 });
 ```
 
+[Azure - deploy zip](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli)
+[Pulumi example appservice](https://www.pulumi.com/registry/packages/azure-native/how-to-guides/azure-ts-appservice/)
+
 ## Linux environment
 
 To use linux as OS instead of windows, which is default.
@@ -63,8 +66,3 @@ const appServicePlan = new web.AppServicePlan(..., {
 [Pulumi Docs - App Service Plan](https://www.pulumi.com/registry/packages/azure-native/api-docs/web/appserviceplan/#reserved_nodejs)
 
 [Pulumi Examples - Azure CS Functions](https://github.com/pulumi/examples/blob/master/azure-cs-functions/FunctionsStack.cs#L27)
-
-## References
-
-[Azure - deploy zip](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli)
-[Pulumi example appservice](https://www.pulumi.com/registry/packages/azure-native/how-to-guides/azure-ts-appservice/)
