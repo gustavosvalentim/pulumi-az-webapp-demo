@@ -49,6 +49,7 @@ const appService = new web.WebApp(..., {
 ```
 
 [Azure - deploy zip](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=cli)
+
 [Pulumi example appservice](https://www.pulumi.com/registry/packages/azure-native/how-to-guides/azure-ts-appservice/)
 
 ## Linux environment
@@ -72,3 +73,18 @@ const appServicePlan = new web.AppServicePlan(..., {
 By default, resources will be created in `brazilsouth` location, run `pulumi config set azure-native:location <region>` to change it.
 
 Obtain a list of available locations `az account list-locations --query "[].name"`.
+
+## Autoscale
+
+Azure App Service Plan can scale out (horizontally) based on metrics and schedule.
+
+- Metrics from App Service Plan can be used trigger actions that increase or decrease the number of VMs instances. More on metrics [here](https://learn.microsoft.com/en-us/azure/app-service/web-sites-monitor)
+- Schedule autoscale to run on a specific date by setting the start and end date or a recurrence.
+
+[Get started with autoscale in Azure](https://learn.microsoft.com/en-us/azure/azure-monitor/autoscale/autoscale-get-started)
+
+[Understand autoscale settings](https://learn.microsoft.com/en-us/azure/azure-monitor/autoscale/autoscale-understanding-settings)
+
+[Autoscaling best practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/auto-scaling)
+
+[Pulumi Docs - Insights AutoscaleSetting](https://www.pulumi.com/registry/packages/azure-native/api-docs/insights/autoscalesetting/)

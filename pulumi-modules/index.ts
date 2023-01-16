@@ -60,7 +60,7 @@ const appService = new web.WebApp(
       nodeVersion: "16-lts",
       loadBalancing: web.SiteLoadBalancing.WeightedRoundRobin,
       limits: {
-        maxPercentageCpu: 20,
+        maxPercentageCpu: 90,
       },
       alwaysOn: true,
       httpLoggingEnabled: true,
@@ -92,5 +92,56 @@ const appService = new web.WebApp(
   { parent: appServicePlan, dependsOn: [appServicePlan] }
 );
 
-export const AppServiceName = appService.name;
+new insights.AutoscaleSetting(getResourceName("autoscale"), {
+  resourceGroupName: resourceGroup.name,
+  enabled: true,
+  targetResourceUri: appServicePlan.id,
+  profiles: [
+    {
+      rules: [
+        {
+          metricTrigger: {
+            metricName: "CPU Percentage",
+            metricNamespace: "Standard metrics",
+            metricResourceUri: appServicePlan.id,
+            operator: insights.ComparisonOperationType.GreaterThanOrEqual,
+            timeAggregation: insights.TimeAggregationType.Average,
+            statistic: insights.MetricStatisticType.Average,
+            threshold: 70,
+            timeGrain: "PT1M",
+            timeWindow: "PT5M",
+          },
+          scaleAction: {
+            value: "1",
+            type: insights.ScaleType.ChangeCount,
+            direction: insights.ScaleDirection.Increase,
+            cooldown: "PT5M",
+          },
+        },
+        {
+          metricTrigger: {
+            metricName: "CPU Percentage",
+            metricNamespace: "Standard metrics",
+            metricResourceUri: appServicePlan.id,
+            operator: insights.ComparisonOperationType.LessThanOrEqual,
+            timeAggregation: insights.TimeAggregationType.Average,
+            statistic: insights.MetricStatisticType.Average,
+            threshold: 50,
+            timeGrain: "PT1M",
+            timeWindow: "PT5M",
+          },
+          scaleAction: {
+            value: "1",
+            type: insights.ScaleType.ChangeCount,
+            direction: insights.ScaleDirection.Decrease,
+            cooldown: "PT5M",
+          },
+        },
+      ],
+      capacity: { default: "1", minimum: "1", maximum: "2" },
+      name: "scale 1 instance when cpu usage > 70",
+    },
+  ],
+});
+
 export const WebApp = pulumi.interpolate`https://${appService.defaultHostName}`;
